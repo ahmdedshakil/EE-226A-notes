@@ -232,3 +232,43 @@ For the other direction of the proof we refer to the textbook.
 \end{proof}
 
 \end{thrm}
+
+
+
+\begin{rmk}{}{}
+Let \( X \) be a random variable with distribution \( F_{X}  \). It follows by continuity from above and below, respectively that 
+\[
+    P\left\{ X = - \infty  \right\}  = \lim_{x \to - \infty }F_{X} (x) \text{ and } P\left\{ X = \infty  \right\}  = 1 - \lim_{x \to \infty} F_{X} (x). 
+\]
+These limits are always well-defined by monotonicity of $F_X$.
+\end{rmk}
+
+\begin{defn}{Law of a random variable}{}
+    We define the law of a random variable to be 
+    \[
+        L_{X} (B)\coloneqq P\left\{ X \in B \right\}, \ \ B \in \mathcal{B} _{\overline{\mathbb{R} } }.
+    \]
+    This defines a probability measure on \( \mathbb{R}  \) equipped with the Borel \( \sigma - \)algebra. Indeed, \( L_{X} ([- \infty ,x]) = F_{X} (x) \) for all \( x \in \mathbb{R}  \), where \( F_{X}  \) is the distribution function of \( X \). So, by Carathéodory’s extension theorem and definition of the Borel \( \sigma - \)algebra, \( L_{X}  \) is a probability measure on \( (\overline{\mathbb{R} } , \mathcal{B} _{\overline{\mathbb{R} } }) \). The \textbf{law} of \( X \) is synonymous with the distribution of \( X \). 
+\end{defn}
+
+\begin{defn}{Discrete random variable}{}
+A real-valued random variable \( X \) is said to be a \textbf{discrete random variable} if it-s distribution function is a step function; that is, there is a countable set \( (x _{i} )_{i\geq 1} \subset \mathbb{R}  \) and a function \( p_{X}:\mathbb{R} \to [0,1]  \) such that 
+\[
+    F_{X} (x) = \sum_{i\geq 1:x_{i} \leq x}p_{X} (x _{i} ) = \sum_{i \geq 1} p_{X} (x _{i} )1_{[x_{i} , \infty ]}(x), \ \ x\in \mathbb{R} . 
+\]
+In this case, the function \( p_{X}  \) is called the \textbf{probability mass function} (pmf) of \( X \). 
+
+\end{defn}
+
+\begin{defn}{Continuous random variable}{}
+A real-valued random variable \( X \) is said to be a \textbf{continuous random variable} if its distrbution function \( F_{X}  \) is absolutely continuous. In other words, there exists a function \( f_{X} :\mathbb{R} \to [0, \infty) \) such that 
+\[
+    F_{x} (x) = \int_{-\infty}^{x} f_{X} (u) \,du, \ \ x \in  \mathbb{R} .  
+\]
+
+The function \( f_{X}  \) is called the \textbf{probability density function} (pdf) of \( X \). 
+\end{defn}
+
+\begin{defn}{Random vector}{}
+A \textbf{random vector} is a finite collection of random variables, and a similar story is true here. 
+\end{defn}
