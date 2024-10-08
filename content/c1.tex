@@ -1,0 +1,234 @@
+\chapter{Elements of Probability Theory}
+
+% Currently on section 1.1 and at theorem 1.2
+
+\section{Probability Spaces and Events}
+\begin{defn}{Kolmogorov's axioms}{}
+For any \textbf{probability space} \( (\Omega, \mathcal{F}, P ) \), the function \( P \) is called a \textbf{probability measure}. It is assumed to satisfy Kolmogorov's axioms:
+
+\begin{enumerate}[label = \emph{\roman*.)}]
+    \item \( P(A) \geq 0 \) for all \( A \in \mathcal{F}  \);
+    \item \( P(\Omega )  = 1\);
+    \item if \( A_1, A_2, \dots \in \mathcal{F}  \)  are disjoint events, then \( P(\cup _{i\geq 1}A_{i} ) = \sum_{i\geq 1}P(A_{i} )  \). 
+\end{enumerate}
+\end{defn}
+
+The probability space we are working in encodes the model of our experiment, with the \textbf{measurable space} \( (\Omega , \mathcal{F} ) \) being the most fine-grained representation of outcomes we can hope to observe. 
+
+\begin{thrm}{}{}
+For a probability space \( (\Omega , \mathcal{F} ,P) \), the probability measure \( P \) enjoys the following properties:
+\begin{enumerate}[label=\emph{\roman*.)}]
+    \item Monotonicity: If \( A \subset B \) are events, then \( P(A) \leq P(B) \). 
+    \item Subadditivity (Union bound): If \( (A_{i} )_{i\geq 1} \) is a sequence of events in \( \mathcal{F}  \) and \( A = \bigcup_{i\geq 1}A_{i}   \), then \( P(A) \leq \sum_{i\geq 1}P(A_{i} )  \). 
+    \item Continuity from below: If \( A_1 \subset A_2 \subset  \dots  \) are events in \( \mathcal{F}  \) and \( A = \bigcup_{i\geq 1} A_{i} \), then \( P(A_{i} )  \to  P(A) \). 
+    \item Continuity from above: If \( A_1 \supset A_2 \supset \dots  \) are events in \( \mathcal{F}  \) and \( A = \bigcap_{i\geq 1} A_{i}  \), then \( P(A_{i} ) \to  P(A) \). 
+\end{enumerate} 
+    \tcbline
+\begin{proof}
+    \quad
+    \newline
+\begin{enumerate}[label = \emph{\roman*.)}]
+    \item Monotonicity follows from the following: \( P(A)\leq P(A) + P(A^{C} \cap B) = P(B) \). 
+    \item Define \( E_1 = A_1 \) and \( A_{i}  = A_{i} \cap (\cup _{j<i}A_{i} )^{C}  \) for \( i\geq 2 \). Then the \( E_{i}  \)'s are disjoint, \( E_{i} \subseteq A_{i}  \) and \( A = \cup _{i\geq 1}A_{i} = \cup _{i\geq 1}E_{i}  \). Now we have \( P(A) = P(\cup _{i\geq 1}E_{i} )= \sum_{i\geq 1}P(E_{i} )\leq \sum_{i\geq 1}P(A_{i} )   \).
+    \item Define \( E_{i}  \)'s as above, and note that 
+    \[
+        P(A) = \sum_{i\geq 1}P(E_{i}) = \lim_{n \to \infty} \sum_{i\geq 1}^{n}P(E_{i} ) = \lim_{n \to \infty} P(A_{n} ).
+    \]
+    \item We now apply the previous part to \( A_{1}^{C} \subset A_2 ^{C} \subset \cdots   \). 
+    \[
+        \lim_{n \to \infty} P(A_{n} ) = 1 - \lim_{n \to \infty} P(A_{n} ^{C} ) = 1 - P(A ^{C} )= P(A).
+    \]
+\end{enumerate}
+\end{proof}
+
+\end{thrm}
+
+\begin{thrm}{Law of total probability}{}
+If events \( A_1, A_2,\dots  \) partition \( \Omega  \), then 
+\[
+    P(B) = \sum_{i\geq 1} P(A_{i} \cap B), \quad B \in \mathcal{F} .
+\]
+\end{thrm}
+
+\subsection{Infinitely often and Borel-Cantelli lemmas}
+
+\begin{defn}{Infinitely often}{}
+\[
+    \left\{ A_{n} \text{ infinitely often}  \right\} = \bigcap_{n\geq 1} \bigcup_{i\geq n} A_{i}. 
+\]
+We should understand \( \left\{ A_{n} \text{ i.o.}  \right\}  \) to be the set of samples \( \omega \in \Omega  \) such that \( \omega \in A_{i}  \) for infinitely many \( i\geq 1 \). 
+\end{defn}
+
+\begin{lem}{Borel-Cantelli}{}
+Let \( A_1, A_2,\dots  \) be a sequence of events. If 
+\begin{align*}
+    \sum_{i\geq 1} P(A_{i} ) < \infty 
+\end{align*}
+then \( P(\{A_{i} \text{ infinitely often} \}) = 0.\) 
+
+\tcbline
+\begin{proof}
+Observe that \( (\cup _{i\geq n}A_{i} )_{n\geq 1} \) is a decreasing sequence of events. Therefore, continuity from above and subadditivity together imply
+\[
+    P\left( \bigcap _{n\geq 1}\bigcup _{i\geq n} A_{i} \right) = \lim_{n \to \infty} P \left( \bigcup_{i\geq n} A_{i}   \right) \leq \lim_{n \to \infty} \sum_{i\geq n}  P(A_{i} ) \to  0. 
+\]
+\end{proof}
+
+\end{lem}
+
+\begin{defn}{Independent events}{}
+A collection of events \( A_1, A_2, \dots  \) are \textbf{independent} if 
+\[
+    P \left( \bigcap_{ i \in S} A_{i}  \right)  = \prod_{i \in  S} P(A_{i} ) 
+\]
+for every finite subset \( S \subset \left\{ 1, 2, 3, \dots  \right\}  \). If \( A_1, A_2, \dots  \) are independent, then \( A_1 ^{C} , A_2, \dots  \)  are independent. By induction, the complements \( A_1 ^{C} , A_2 ^{C} ,\dots  \) are also independent. 
+\end{defn}
+
+\begin{lem}{Converse to Borel-Cantelli}{}
+Let \( A_1, A_2, \dots  \) be independent events. If 
+\[
+    \sum _{i\geq 1} P(A_{i} )= \infty , 
+\]
+then \( P (\left\{ A_{i} \text{ infinitely often}  \right\} ) = 1.\) 
+
+\tcbline
+
+\begin{proof}
+By definitions and continuity from above, 
+\[
+    P\left(   \left\{ A_{i} \text{ i.o.}  \right\} \right) = \lim_{n \to \infty} P\left(   \bigcup_{i\geq n}A_{i}  \right) = 1 - \lim_{n \to \infty} P\left(  \bigcap_{i\geq n} A_{i} ^{C}   \right).
+\]
+By independence, we have for any \( m\geq n \) 
+
+\[
+    P\left( \bigcap_{i = n}^{m} A_{i} ^{C}  \right) = \prod_{i = n}^{m} P(A_{i} ^{C} ) = \prod_{i= n}^{m}(1 - P(A_{i} )) \leq \exp \left( - \sum_{i = n}^{m} P(A_{i} )  \right), 
+\]
+where we made use of the inequality \( 1 - x\leq e^{-x}  \text{ for all }   x \in \mathbb{R}   \). Since \( \sum_{i\geq 1}P(A_{i} )  \)  doesn't converge, we must have that 
+\[
+    P\left( \bigcap_{i\geq n} A_{i} ^{C}   \right) = \lim_{m \to \infty} P \left( \bigcap_{i = n}^{m}  A_{i}  ^{C} \right) \leq \exp \left(- \sum_{i\geq n}P(A_{i} )  \right) = 0.  
+\]
+\end{proof}
+
+\end{lem}
+
+
+\subsection{Existence of probability measures}
+
+Some sets are simply not measurable, well call such sets non-measurable. A set which is non-measurable cannot be assigned a probability. In general, we tend to stick with \( \sigma - \)algebras, since they have nice properties. A deep theorem from probability theory called \textbf{Carathéodory's extension theorem} basically tells us that as long as we assign probabilities to a small collection of events in a consistent way, then there exists a natural and unique assignment of probabilities to the \( \sigma - \)algebra generated by the original collection. 
+
+
+\begin{thrm}{Carathéodory's extension theorem}{}
+Suppose \( \mathcal{G}  \) is a family of subsets of \( \Omega  \) that satisfies the following (relatively modest) properties:
+\begin{enumerate}[label = \emph{\roman*.)}]
+    \item \( \varnothing , \Omega \in \mathcal{G}  \);
+    \item if \( A, B \in \mathcal{G}  \), then \( A \cap B \in \mathcal{G}  \);
+    \item if \( A,B \in \mathcal{G}  \), then there is a \emph{finite} number of \emph{disjoint} sets \( C_1 ,\dots , C_{n} \in  \mathcal{G}   \) such that \( A \setminus B = \bigcup_{i=1}^{n} C_{i}  \).
+\end{enumerate}
+(Note: (\emph{iii}) is weaker than imposing the assumption \( A \in \mathcal{G} \implies A^{C} \in  \mathcal{G}  \). )
+
+The extension theorem says that if we assign numbers (i.e., probabilities) \( p(A) \) to the sets \( A \in \mathcal{G}  \) so that 
+
+\begin{enumerate}[label = \Alph*.]
+    \item \( p(A) \geq 0 \text{ for } A \in \mathcal{G}   \); 
+    \item \( p(\Omega ) = 1\);
+    \item if \( B \in \mathcal{G}  \)  and \( A_1, A_2, \dots  \in \mathcal{G} \) are disjoint with \( B = \cup_{i\geq 1}A_{i}   \), then \( p(B) = \sum_{i\geq 1}p(A_{i} )  \), 
+\end{enumerate}
+then there exists a unique probability measure \( P \) on \( \sigma (\mathcal{G} ) \) that satisfies A-C and has the property that \( P(A) = p(A)  \) for all \( A \in \mathcal{G}  \).
+\end{thrm}
+
+\section{Random Variables and Expectation}
+
+\subsection{Random variables and algebraic properties}
+
+
+\begin{defn}{Random Variable}{}
+We define a random variable to be a function \( X: \Omega \to \overline{\mathbb{R}}  \) that satisfies
+\[
+    \left\{ \omega \in \Omega : X(\omega )\leq \alpha  \right\} \in \mathcal{F} \text{ for each } \alpha \in \overline{\mathbb{R} }.   
+\]
+
+Note that \( \overline{\mathbb{R} } = \mathbb{R} \cup \left\{ - \infty , \infty  \right\}   \). 
+\end{defn}
+A function \( X : \Omega \to \overline{\mathbb{R} } \) satisfying the definition above is said to be \( \mathcal{F}-\)measurable. If \( X \) does not take values \( \pm \infty  \) (say, with probability one), then we say it is a \textbf{real-valued random variable}. 
+
+\begin{idea}{}{}
+If \( X \) is a random variable, then \( pX \text{ and }  \left\lvert X \right\rvert ^p \) are random variables for \( p \in \mathbb{R}  \). Moreover, if \( X,Y \) are real-valued random variables, then \( X + Y \), and \( XY \) are also random variables. 
+
+\tcbline
+
+\begin{proof}
+We leave the first claim as an exercise. For the second, note that we can write
+\[
+    \left\{ \omega : X(\omega ) + Y(\omega ) > \alpha  \right\} = \bigcup_{q\in \mathbb{Q} } \left\{ \omega :X(\omega )>q \right\} \cap \left\{ \omega :Y(\omega )>\alpha - q \right\}.
+\]
+Since \( \mathcal{F}  \) is closed under countable unions, intersections, and complements, it follows from the assumption that \( X, Y \) are random variables that \( \left\{ \omega : X(\omega ) + Y(\omega ) \leq \alpha  \right\} \in \mathcal{F}  \). The third claim now follows easily by writing \( XY = \left[ (X + Y)^{2} -(X - Y)^{2}  \right]/4  \).
+\end{proof}
+
+\end{idea}
+
+\begin{idea}{}{}
+If \( (X_{n} )_{n \geq 1}  \) is a sequence of random variables defined on a common probability space \( (\Omega , \mathcal{F} , P) \), then 
+\begin{itemize}
+    \item \( \sup _ {n\geq 1} X_{n} \) and \( \inf _{n\geq 1}X_{n}  \)  are random variables; and
+    \item \( \limsup_{n \to \infty} X_{n}  \) and \( \liminf_{n \to \infty} X_{n}  \) are random variables; and 
+    \item if \( \lim_{n \to \infty} X_{n}  \) exists point wise, it is also a random variable. 
+\end{itemize}
+
+\tcbline
+\begin{proof}
+Note that \( \sup _{n\geq 1}X_{n} (\omega )\leq a \) if and only if \( X_{n} (\omega ) \leq a \) for each \( n\geq 1 \). It follows that
+\[
+    \left\{ \omega : \sup _{n\geq 1}X_{n} (\omega )\leq a\right\} = \bigcap_{n\geq 1} \left\{ \omega : X_{n} (\omega ) \leq \alpha  \right\} \in \mathcal{F}, 
+\]  where we used the fact that \( \mathcal{F} \) is closed under countable intersections. Hence, \( \sup _{n\geq 1}X_{n}  \) is a random variable. The rest of the claims are consequences of this. Indeed, since \( \inf _{n\geq 1} X_{n} = - \sup _{n\geq 1}(- X_{n} ) \), it holds that \( \inf _{n\geq 1}X_{n}  \)  is also a random variable. So are \( \limsup_{n \to \infty} X_{n} = \inf _{m\geq 1}\sup _{n\geq m}X_{n}  \), and \( \ \liminf_{n \to \infty} X_{n}  \)  by similar logic. As a result, if \( \lim_{n \to \infty} X_{n}  \) exists pointwise, then it is equal to \( \limsup_{n \to \infty} X_{n}  \) and is therefore also a random variable. 
+\end{proof}
+
+\end{idea}
+
+% stopped here 
+
+\begin{defn}{Almost sure equivalence of random variables}{}
+If \( X, Y \) are random variables and \( P(\left\{ \omega :X(\omega )\neq Y(\omega )  \right\} )= 0 \), then we say \( X = Y \) almost surely (abbreviated a.s.), or \( X = Y \) with probability one. 
+
+\end{defn}
+
+
+\subsection{Distribution functions and distributions}
+
+\begin{defn}{Distribution function}{}
+    A random variable \( X \) on a probability space \( (\Omega , \mathcal{F} , P) \) is described in part by its distribution function \( F_{X} : \mathbb{R} \to [0,1] \), defined as 
+    \[
+        F_{X} (x)\coloneqq P\left\{ X\leq x \right\}, \ \ x\in \mathbb{R} .
+    \]
+
+
+\end{defn}
+
+\begin{thrm}{Properties of the distrbution function}{}
+A function \( F:\mathbb{R} \to [0,1] \) is the distribution function of a random variable if and only if 
+\begin{enumerate}[label = \emph{\roman*.)}]
+    \item \( F \) is nondecreasing
+    \item \( F \) is right-continuous, that is \( \lim_{y \downarrow x} F(y) = F(x) \), for all \( x \in \mathbb{R}  \).  
+\end{enumerate}
+Moreover, \( F \) is the distribution function of a real-valued random variable if and only if it further holds that 
+\[
+    \lim_{x \to - \infty }F(x) = 0  \text{ and } \lim_{x \to \infty} F(x) = 1.
+\]
+\tcbline
+
+\begin{proof}
+If \( F \) is a distribution function for \( X \), then \emph{(i)} follows by monotonicity of \( P \) since 
+\[
+    \left\{ \omega :X(\omega )\leq x \right\} \subset \left\{ \omega :X(\omega )\leq x^\prime  \right\}, \ \ x \leq x^\prime .
+\]
+Next, for \( x \in \mathbb{R}  \), note that 
+\[
+    \left\{ \omega :X(\omega )\leq x \right\}  = \bigcap_{n\geq 1} \left\{ \omega :X(\omega )\leq x + \frac{1}{n}\right\}.
+\]
+Continuity from above again gives \( \lim_{n \to \infty} F(x + \frac{1}{n}) = F(x). \) This, together with \emph{(i)}, gives \emph{(ii)}.
+
+If we have \( X \) real-valued, then we can write \( \Omega = \cup _{n\geq 1}\left\{ \omega :X(\omega )\leq n \right\}  \). Hence, we find that \( \lim_{n \to \infty} F(n) = 1 \)  follows by continuity from below and \(P(\Omega ) = 1\); together with \emph{(i)}, this implies \( \lim_{x \to \infty} F(x) = 1 \). Similarly, since \( \varnothing = \cap _{n\geq 1}\left\{ \omega :X(\omega )\leq - n \right\}  \), continuity from above together with \( P(\varnothing ) = 0 \) implies \( \lim_{n \to \infty}F(- n) = 0  \). As before, with \( (i) \) this yields \( \lim_{x \to - \infty }F(x) = 0  \). 
+
+For the other direction of the proof we refer to the textbook.
+\end{proof}
+
+\end{thrm}
