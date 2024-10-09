@@ -11,5 +11,186 @@
 
 \newpage
 
+\section{Tools and Tricks}
 
+\begin{rmk}{Convergence in second moment }{}
+Convergence in second moment implies convergence in distribution. 
+(via hw 5.3 solution)
+\end{rmk}
+
+\newpage
+
+\section{Time Series Analysis}
+
+\subsection{Second-Order Processes}
+
+\begin{defn}{Second-Order Process}{}
+    Let \( X = (X_{n} )_{n\in \mathbb{Z} } \) be a stochastic process on a probability space \( (\Omega ,\mathcal{F},P) \). The process \( X \) is said to be a (discrete-time) second-order process if it has finite second moments \( \mathbb{E} |X_{n} |^{2} < \infty  \) for all \( n \in \mathbb{Z}  \). Since all \( X_{n}  \) are elements of \( L^2(\Omega ,\mathcal{F} ,P) \), it follows that second-order processes also form a vector space. 
+\end{defn}
+
+\begin{exmp}{}{}
+    Gaussian processes are second-order processes, and the collection of Gaussian processes is a subspace of second-order processes.
+\end{exmp}
+
+\begin{defn}{Second-Order Statistics}{}
+For second-order processes \( X \) and \( Y \) the second-order statistics are summarized by the mean function \( \mu _{X} (n) \coloneqq \mathbb{E} [X_{n} ] \) and covariance function
+\[
+    R_{XY} (m,n) \coloneqq \mathrm{Cov} (X_{m} ,Y_{n} ), \ \ m,n \in \mathbb{Z} .
+\]
+For second-order processes, the mean and covariance functions are finite everywhere.
+\end{defn}
+\begin{exmp}{}{}
+    If $X$ is a Gaussian process, then all finite-dimensional marginals
+    are characterized by the functions $\mu_ X$ and $R_{XX} $.
+\end{exmp}
+
+\begin{defn}{Wide Sense Stationary}{}
+A second-order process \( X = (X_{n} )_{n\in \mathbb{Z} }  \) is wide sense stationary (WSS), if \( \mu _{x} (n) = \mu _{X} (0)\) for all \( n \), and \( R_{XX}(m,n)  \) is a function of only the difference $(m-n)$. In this case, we often abbreviate \( R_{X  X}(m,n) \) as \( R_{X X}(m - n) \) to denote parametrization of the covariance function by the difference \( (m - n) \). 
+\end{defn}
+
+\begin{rmk}{}{}
+For WSS processes the covariance enjoys the follow symmetries:
+\[
+    R_{XX} (n,n + k) = R_{X X}(0,k) = R_{X X}(k, 0) = R _{X X}(0,- k).
+\]
+In our compact notation, \( R_{X X}(k)= R_{X X}(-k) \), so that \(  R_{X X} \) is a symmetric function of \( k \). 
+\end{rmk}
+
+\begin{defn}{Jointly Wide Senese Stationary}{}
+    Processes \( X = (X_{n} )_{n \in \mathbb{Z}}  \) and \( Y = (Y_{n} )_{n \in \mathbb{Z}} \) are jointly wide sense stationary (JWSS) if each are WSS and the covariance function \( R_{XY} (m,n) = \mathrm{Cov} (X_{m}, Y_{n} )\) depends only on the difference \( m - n \). In this case, we abbreviate \( R_{XY} (m,n) \) as \( R_{XY}(m - n)  \). 
+
+\end{defn}
+\begin{rmk}{}{}
+    Unlike \( R_{X X} \), the function \( R_{XY} \) is not symmetric in its argument. However, if \( X \) and \( Y \) are JWSS, then we do have the following identities
+    \[
+        R_{XY} (n + k, n) = \mathrm{Cov} (X_{k} , Y_0) = \mathrm{Cov} (X_{0} , Y_ {- k} ) = R_{XY}(k,0) = R_{XY} (0,- k).  
+    \]
+    In particular, noting the order of subscripts, we have \( R_{XY} (k) = R_{YX} (- k) \). 
+\end{rmk}
+
+\subsection{Spectral Theory of Second-Order Processes}
+
+
+\subsubsection{Fourier transform speedrun}
+To start, we note some info and results about Fourier transforms. 
+
+\begin{misc}{About \( l^p \) spaces }{}
+We write \( x\in l^p(\mathbb{Z} ) \) if \( x \) is a real-valued sequence \( (x(n))_{n \in \mathbb{Z} } \subset \mathbb{R}  \) satisfying \( \lVert x \rVert _p \coloneqq \left( \sum_{n} \left\lvert x(n)^P \right\rvert  \right)^\frac{1}{p} < \infty  \), with \( \lVert x \rVert _ \infty \coloneqq \sup _n\left\lvert x(n) \right\rvert  \). For \( 1\leq p\leq q \leq \infty  \), \( l^p(\mathbb{Z} ) \) is complete with respect to convergence in its norm \( \lVert \cdot  \rVert  \), and \( l^p(\mathbb{Z} )\subset l^q(\mathbb{Z} ) \) on account of \( \lVert x \rVert _q \leq  \lVert x \rVert _p \). The spaces \( l^p(\mathbb{Z} ) \)  are equal to the closure of \( l^1(\mathbb{Z} ) \). Of particular note, \( l^2(\mathbb{X} ) \) is a Hilbert space when equipped with the inner product
+\[
+    (x,y) \mapsto \sum_{n} x(n)y(n), \ \ x,y \in l^2(\mathbb{Z} ). 
+\]
+\end{misc}
+
+\begin{defn}{Discrete-time Fourier Transform}{}
+For a sequence \( x \in l^1(\mathbb{Z} ) \), its discrete-time Fourier transform is defined as the complex-valued function 
+\[
+    \hat{x} (\omega ) = \sum_{n} x(n)e^{-i \omega n}, \ \ \omega \in [- \pi ,\pi ).
+\]
+Note that the mapping \( x \mapsto \hat{x} \) is a linear transformation from \( l^1(\mathbb{Z} )\) to  the function space 
+\[
+    L^{\infty} ([-\pi, \pi ))\coloneqq \left\{ f:[- \pi ,\pi )\to \mathbb{C};  \ \sup _\omega |f(\omega )|< \infty   \right\}. 
+\]
+
+This leads to the Fourier inversion identity 
+\[
+    x(n) = \frac{1}{2\pi } \int_{- \pi }^{\pi } \hat{x} (\omega )e^{i \omega n}  \,d \omega  = \sum_{k} x(k)\delta (n - k) , \ \ n \in  \mathbb{Z}. 
+\]
+
+This formula holds if \( \hat{x}  \) is the Fourier transform of \( x\in l^2(\mathbb{Z} ) \). 
+
+
+
+\end{defn}
+
+\begin{thrm}{Convolution theorem for Fourier transforms}{}
+If \( x,y \in l^2(\mathbb{Z} ) \) and \( \mathrm{ess}\sup (\left\lvert \hat{y}  \right\rvert ) < \infty  \), then their convolution \( z = x \ast y \) is in \( l^2(\mathbb{Z} ) \). In particular, all Fourier transforms exist and satisfy 
+\[
+    \hat{z} = \hat{x} \hat{y} . 
+\]
+\end{thrm}
+
+
+
+\begin{misc}{Parseval identity}{}
+If \( x,y \in l^1(\mathbb{Z} ) \), we have the easily verified Parseval identity
+\[
+    \sum_{n} x(n)y(n) = \frac{1}{2\pi }\int_{- \pi }^{\pi} \hat{x} (\omega )\hat{y} ^{\ast}(\omega )   \,d \omega  .
+\]
+
+In particular, this implies that the mapping \( x\mapsto \hat{x}   \) is a linear isometry from \( l^2(\mathbb{Z} ) \cap l^1 (\mathbb{Z} ) \) into \( L^2([-\pi, \pi )) \); i.e., 
+\[
+    \lVert x \rVert _2 = \lVert \hat{x}  \rVert _{L^2} \text{ for all } x \in  l^1(\mathbb{Z} ),
+\] where \( \lVert \cdot  \rVert_{L^2}  \) denotes the norm on \( L^2([- \pi ,\pi )) \) induced by its inner product. 
+\end{misc}
+
+
+\begin{defn}{Impulse response}{}
+    If \( x \) is input to a LTI system with impulse response \( g \), then the output sequence \( y \) is defined by the convolution 
+    \[
+        y(n) = (x \ast g)(n) = \sum_{k} x(n - k)g(k), \ \ n \in \mathbb{Z} ,
+    \]
+    provided the series converges. 
+    \end{defn}
+    
+\begin{defn}{Frequence response}{}
+An LTI system with impulse response \( g \in l^2(\mathbb{Z} ) \) is equivalently characterized by its frequency response \( G \), which is simply the Fourier transform of the impulse response:
+\[
+    G(\omega ) = \sum_{n} g(n)e^{- i \omega n}, \ \ \omega \in [- \pi , \pi ). 
+\]
+\end{defn}    
+\begin{rmk}{}{}
+    By convolution theorem, if a finite-energy sequence \( x \) (i.e., \( x\in l^2(\mathbb{Z} ) \)) is input to a stable (i.e. BIBO stability) LTI system with impulse response \( g \), the output \( y \) will also have finite energy, and is characterized by its Fourier transform
+    \[
+        \hat{y} = G \hat{x},
+    \]
+    where \( \hat{x}  \) denotes the Fourier transform of the input \( x \). 
+\end{rmk}
+
+Now back to section 5.2.
+
+
+
+\begin{defn}{Energy Spectral Density}{}
+Given \( x \in l^1(\mathbb{Z} )  \), we can define a sequence \( a \in l^1(\mathbb{Z} ) \) via the self-convolution 
+\[
+    a(n) = \sum_{k} x(k)x(n - k),  \ \ n \in \mathbb{Z}. 
+\]
+By the convolution theorem and time-reversal property of Fourier transforms, the discrete-time Fourier transform of \( a \) is equal to 
+\[
+    \hat{a} (\omega ) = \hat{x} (\omega )\hat{x} ^{\ast} (\omega ) = |\hat{x} (\omega )| ^{2} \geq 0. 
+\]
+The function \( \hat{a}  \) is called the energy spectral density of \( x \), since it is a nonnegative function with the property that its integral over any subset of frequencies in \( [- \pi , \pi ) \) is equal to the energy of the sequence \( x \) restricted to those frequencies. 
+\end{defn}
+
+\begin{defn}{Power Spectral Density}{}
+    The average energy normalized by time is called power. Assume we are working with a zero-mean WSS random process. 
+    \[
+        \frac{1}{2N + 1} \mathbb{E} [A_{N} (\omega )] = \frac{1}{2N + 1} \sum_{- N\leq m,n \leq N } \mathbb{E} [X_{n} X_{m} ] e^{-i \omega (n - m)}  = \sum_{k = - 2N}^{2N} R_{XX}(k) e^{-i \omega k}\left( 1 - \frac{\left\lvert k \right\rvert }{2N + 1}  \right)    . 
+    \]
+    Now, if \( R_{ X X} \in l^1(\mathbb{Z} ) \), then the limit as \( N \to  \infty \) exists on the right by dominated convergence, so that 
+    \[
+        S_{X X} (\omega )\coloneqq \lim_{N \to \infty} \frac{1}{2N + 1}\mathbb{E} [A_{N} (\omega )] = \sum_{k}R_{X X}(k) e^{- j \omega k}, \ \ \omega \in [- \pi ,\pi ).  
+    \]
+    The function \( S_{X X} \) is called the power spectral density of the process \( X \), and is a real, non-negative function. The definition of power spectral density can be extended to WSS processes \( X \) with \( R_{X X} \in  l^2(\mathbb{Z} ) \) using the mean-square convergence of the Fourier transform. In this case, \( S_{X X} \) continues to be real and non-negative. 
+\end{defn}
+\begin{defn}{Regular covariance}{}
+We say that \( X \) admits a regular covariance if: (i) \( R_{X X } \in l^2(\mathbb{Z} ) \); and (ii) there exists \( \lambda >0 \) such that the power spectral density satisfies
+\[
+    \lambda \leq \mathrm{ess}\inf (S_{XX}) \leq \mathrm{ess}\sup (S_{XX}) \leq \lambda ^{-1} . 
+\]
+\end{defn}
+
+\begin{defn}{Cross-power spectrum}{}
+If \( X \) is a random variable with finite variance and \( Y = (Y_{n} )_{n \in \mathbb{Z} } \) is zero-mean WSS process, then the cross-power spectrum is defined via the discrete-time Fourier transform
+\[
+    S_{YX}(\omega ) \coloneqq \sum_{n} \mathbb{E} [XY_{n} ]e^{-i \omega n} , \ \ \omega \in [- \pi ,\pi ),
+\] 
+provided the series converges in a suitable sense (e.g., if \( n \mapsto \mathbb{E} [XY_{n} ] \) is in \( l^2(\mathbb{Z})  \), then series converges in the mean-square sense).
+
+Note the order of subscripts. If \( X = (X_{n} )_{n \in\mathbb{Z} } \) is JWSS with \( Y \), we define 
+\[
+    S_{YX}(\omega ) \coloneqq \sum_{n} \mathbb{E} [X_0 Y_{n} ]e^{-i \omega n};
+\]
+i.e., \( S_{YX}  \) is the Fourier transform of \( R_{YX}  \), consistent with the definition of power spectral density. In this case, the quantity \( S_{XY}  \) is also well-defined (as the Fourier transform of \( R_{XY}  \)), and enjoys the conjugate symmetry \( S_{XY }= S^{\ast} _{YX}  \). 
+\end{defn}
 \end{document}
