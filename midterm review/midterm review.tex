@@ -20,6 +20,21 @@ Convergence in second moment implies convergence in distribution.
 
 \newpage
 
+\section{Limit Theorems and Modes of Convergence}
+
+\subsection{Asymptotic Behavior of the Empirical Mean}
+
+\begin{thrm}{Strong Law of Large Numbers}{}
+Let \( (X_{n} )_{n\geq 1} \) be i.i.d. integrable random variables. For \( S_{n} \coloneqq X_1 + \dots + X_{n}, \ n\geq 1 \), it holds that 
+\[
+    \mathrm{Pr} \left\{ \lim_{n \to \infty} \frac{1}{n}S_{n}  =\mathbb{E} [X_1] \right\}  = 1. 
+\]
+\end{thrm}
+
+\begin{rmk}{}{}
+This conclusion continues to hold when (i) the \( X_{n}  \)'s are identically  distributed and pairwise independent; and/or (ii) the expectation \( \mathbb{E}[X_1]  \) exists, but is not necessarily finite. The first follows from the proof given, the second is left as an exercise for the reader. 
+\end{rmk}
+
 \section{Time Series Analysis}
 
 \subsection{Second-Order Processes}
@@ -169,7 +184,7 @@ The function \( \hat{a}  \) is called the energy spectral density of \( x \), si
     \]
     Now, if \( R_{ X X} \in l^1(\mathbb{Z} ) \), then the limit as \( N \to  \infty \) exists on the right by dominated convergence, so that 
     \[
-        S_{X X} (\omega )\coloneqq \lim_{N \to \infty} \frac{1}{2N + 1}\mathbb{E} [A_{N} (\omega )] = \sum_{k}R_{X X}(k) e^{- j \omega k}, \ \ \omega \in [- \pi ,\pi ).  
+        S_{X X} (\omega )\coloneqq \lim_{N \to \infty} \frac{1}{2N + 1}\mathbb{E} [A_{N} (\omega )] = \sum_{k}R_{X X}(k) e^{- i \omega k}, \ \ \omega \in [- \pi ,\pi ).  
     \]
     The function \( S_{X X} \) is called the power spectral density of the process \( X \), and is a real, non-negative function. The definition of power spectral density can be extended to WSS processes \( X \) with \( R_{X X} \in  l^2(\mathbb{Z} ) \) using the mean-square convergence of the Fourier transform. In this case, \( S_{X X} \) continues to be real and non-negative. 
 \end{defn}
@@ -193,4 +208,66 @@ Note the order of subscripts. If \( X = (X_{n} )_{n \in\mathbb{Z} } \) is JWSS w
 \]
 i.e., \( S_{YX}  \) is the Fourier transform of \( R_{YX}  \), consistent with the definition of power spectral density. In this case, the quantity \( S_{XY}  \) is also well-defined (as the Fourier transform of \( R_{XY}  \)), and enjoys the conjugate symmetry \( S_{XY }= S^{\ast} _{YX}  \). 
 \end{defn}
+
+\subsection{Linear Estimation from WSS Observations}
+
+\begin{thrm}{}{3.20}
+
+    Fix \( I \subset \mathbb{Z}  \) and let \( Y = (Y_{n} )_{n\in \mathbb{Z} }  \) be a zero-mean WSS stationary process with regular covariance. For any zero-mean random variable \( X \) with finite variance, there exists \( h \in l^2(\mathbb{Z} ) \) such that 
+    \[
+        \mathbb{L} [X |Y_{I} ] = \sum_{n\in I } h(n)Y_{n}   \ \ \text{ in } L^2. 
+    \]
+    Moreover, the sequence \( h \) is unique on the indices in \( I \). 
+\end{thrm}
+
+\begin{thrm}{Weiner-Hopf equations}{}
+Fix \( I \subset \mathbb{Z}  \) and let \( Y = (Y_{n} )_{n \in \mathbb{Z} } \) be a zero-mean WSS stationary process with regular covariance. The sequence \( h \in l^2(\mathbb{Z} ) \) defining the best linear estimator from the previous theorem uniquely solves the system of equations
+\begin{align*}
+    \mathbb{E} [XY_{n} ]  &=  (R_{Y Y} \ast h)(n),  \ \ n \in I.\\
+    h(n)&= 0, \ \ n \notin I. 
+\end{align*}
+
+\end{thrm}
+
+\begin{cor}{}{}
+Let \( Y = (Y_{n} )_{n \in \mathbb{Z} } \) be a zero-mean WSS stationary process with regular covariance. The sequence \( h \in l^2(\mathbb{Z} ) \) defining the best linear estimator \( \mathbb{L} [X|Y] \) via (\ref{th:3.20}) (for \( I = \mathbb{Z}  \)) has Fourier transform
+\[
+    H(\omega ) = \frac{S_{YX}(\omega ) }{S_{YY(\omega )}}, \ \ \omega \in [- \pi ,\pi ). 
+\]
+Moreover, the resulting estimation error is 
+\[
+    \mathbb{E} [|X - \mathbb{L} [X|Y]|^{2} ] = \mathrm{Var} (X) - \frac{1}{2\pi }\int_{- \pi}^{\pi} \frac{\left\lvert S_{YX}(\omega )  \right\rvert^{2}  }{S_{Y Y }(\omega )}  \,d \omega .  
+\]
+
+\end{cor}
+
+\subsection{The Noncasual Wiener Filter}
+
+\begin{thrm}{The noncasual Wiener filter}{}
+Let \( X = (X_{n} )_{n \in \mathbb{Z} } \) and \( Y = ( Y_{n} )_{n \in \mathbb{Z} } \) be zero-mean JWSS process, and assume that \( Y \) has regular covariance. The process \( (\mathbb{L} [X_{n} |Y])_{n \in \mathbb{Z} } \) can be realized by passing \( Y \) through a LTI system with frequence response 
+\[
+    H(\omega ) = \frac{S^{\ast} _{YX}(\omega )}{S_{Y Y}(\omega )} , \ \ \omega \in [- \pi ,\pi ).
+\]
+The resulting estimation error is
+\[
+    \mathbb{E} [\left\lvert X_{n} - \mathbb{L} [X_{n} |Y] \right\rvert^{2}  ] = R_{XX}(0) - \frac{1}{2\pi }\int_{- \pi}^{\pi} \frac{\left\lvert S_{YX}(\omega )  \right\rvert^{2}  }{S_{YY}(\omega ) }  \,d \omega . 
+\]
+\end{thrm}
+\subsection{Linear Filtering of WSS process}
+
+\begin{thrm}{Effect of LTI systems on WSS processes}{}
+Let \( X = (X_{n} )_{n \in \mathbb{Z} } \) be a zero-mean WSS process and consider a stable LTI system with impulse response \( g \) (frequency response \( G \)). There exists a zero-mean process \( Y = (Y_{n} )_{n \in \mathbb{Z} } \), JWSS with \( X \), such that
+\[
+    Y_{n} = \sum_{k} g(k)X_{n - k} \text{ a.s. and in } L^2, \text{ for all } n \in \mathbb{Z} . 
+\]
+Moreover, if \( R_{X X} \in l^2(\mathbb{Z} )\), then \( R_{Y Y}\in l^{2 } (\mathbb{Z} )  \) and 
+\[
+    S_{YY}(\omega ) = S_{X X}(\omega )|G(\omega )|^{2} .
+\]
+The cross-power spectrum \( S_{YX}   \) also exists in this case, and is equal to
+\[
+    S_{YX} (\omega )= S_{XX}G(\omega ).  
+\]
+\end{thrm}
+
 \end{document}

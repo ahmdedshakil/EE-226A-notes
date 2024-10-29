@@ -1,0 +1,145 @@
+\section{Discrete-Time Markov Chains}
+
+\subsection{Definition of a Markov Chain}
+
+\begin{defn}{Markov chain}{}
+    A Markov chain is a process \( (X_{n} )_{n\geq 0} \) satisfying
+    \[
+        \mathrm{Pr} \left\{ X_{n + 1} = j \mid  X_{n} = i, X_{n - 1} = i_{n - 1} , \dots , X_0 = i_0 \right\} = \mathrm{Pr} \left\{ X_{n + 1} = j \mid X_{n} = i \right\}       
+    \]
+    for all \( n\geq 1 \) and \( j, i, i_{n - 1} , i_0 \in \mathcal{S}  \). A Markov chain is said to be \textbf{temporally homogeneous} if there are numbers \( (p_{ij} )_{i,j \in \mathcal{S} } \) such that
+    \[
+        \mathrm{Pr} \left\{ X_{n + 1} = j \mid X_{n} = i \right\} = p_{ij} 
+    \]
+    for all \( n\geq 0 \) and all states \( i,j \in \mathcal{S}  \). The numbers \( (p_{ij} )_{i,j \in \mathcal{S} } \) are generically referred to as the  \textbf{transition probabilities} of the Markov chain. 
+\end{defn}
+
+\begin{defn}{Transition matrix}{}
+\[
+    P = \begin{bmatrix}
+        p_{00}  & p_{01}  & \dots   \\
+         p_{10} &  p_{11} &   \dots \\
+         \vdots& \vdots & \ddots  \\ 
+    \end{bmatrix}
+\] The matrix \( P \) is called the transition matrix. It is a stochastic matrix, which means it is square with non-negative entries, whose rows sum to one. A Markov chain and transition matrix are equivalent representations of each other.
+
+
+
+\end{defn}
+\subsubsection{The Chapman-Kolmogorov equations}
+
+\begin{idea}{The Chapman-Kolmogorov Equations}{}
+
+    We define \textbf{multi-step transition probabilities}
+    \[
+        P_{ij}^n \coloneqq \mathrm{Pr} \left\{ X_{n + m} = j \mid X_{m} = i  \right\} , \ \ n,m\geq 0. 
+    \]
+    The Chapman-Kolmogorov equations give a recursive formula for computing the \( n \)-step transition probabilities. 
+
+    For all \( m,n \geq 0  \) and states \( i,j \), 
+    \[
+        P_{ij}^{m+ n} = \sum_{k} P_{ik} ^m P_{kj}^n .    
+    \]
+    In particular,  we have
+    \[
+        P ^n= \begin{bmatrix}
+            P_{00} ^n & P_{01}  ^n& \dots   \\
+             P_{10} ^n&  P_{11} ^n&   \dots \\
+             \vdots& \vdots & \ddots  \\ 
+        \end{bmatrix}
+    \] where \( P^n \) is the transition matrix \( P \) raised to the \( n^\text{th}  \) power. Also note \( P^{m+ n} = P^m P^n  \). 
+\end{idea}
+
+\begin{defn}{Irreducible}{}
+A \textbf{class} of states is a nonempty set of states such that every state in the set can communicate with one another. These classes form an equivalence relation and partition the state space. We say a Markov chain is irreducible if there is only one class. 
+
+
+\end{defn}
+
+\begin{defn}{Periodicity}{}
+
+    For a state \( i \), define its \textbf{period}
+    \[
+        d(i) \coloneqq \mathrm{gcd} \left\{ n\geq 1: P_{i i} ^n  > 0\right\} .
+    \]
+    States with period 1 are called \textbf{aperiodic}. 
+    Periodicity is a class property. 
+\end{defn}
+
+\begin{idea}{}{}
+Define the \textbf{first return time} for state \( j \in \mathcal{S}  \) as 
+\[
+    T_{j} \coloneqq \inf \left\{ n\geq 1: X_{n} = j \right\}. 
+\]
+
+Let \( (X_{n} ) _{n\geq 0} \) be a Markov chain with transition matrix \( P \). Conditioned on the event \( \left\{ T_{j} < \infty  \right\}  \), the process \( (X_{n + T_{j} })_{n\geq 0} \) is a Markov chain with transition matrix \( P \) and starting state \( j \) and is independent of \( X _0, \dots , X_{T_j} \). 
+\end{idea}
+
+\begin{idea}{}{}
+    A state \( j \) is \textbf{recurrent} if \( \mathrm{Pr} \left\{ T_{j} < \infty  \mid  X _0 = j\right\}   = 1\), and it is called \textbf{transient} if \(  \mathrm{Pr} \left\{ T_{j} < \infty  \mid  X _0 = j\right\}   < 1 \). Recurrence and transience are class properties. 
+\end{idea}
+
+\begin{lem}{}{}
+State \( i \) is recurrent if and only if \( \sum_{n = 1}^{\infty} P_{ii} ^n < \infty . \) 
+\end{lem}
+
+\subsection{Markov Limit Theorems}
+
+\begin{thrm}{Strong Law of Large Numbers for Markov Chains}{}
+Define \( N_{j} (n), \ n\geq 1 \), to be the number of transitions into state \( j \), up to and including time \( n \). More precisely, 
+\[
+    N_{j} (n)\coloneqq \# \left\{ 1\leq k\leq n: X_{k} = j \right\} . 
+\]
+Also define the expected first return time to be
+\[
+    \mu _{j j } \coloneqq \mathbb{E} [T_{j} |X_{0}= j ].
+\]
+
+Let \( (X_{n} )_{n\geq 0} \) be a Markov chain starting in state \( X_0 = i. \) If \( i \leftrightarrow j \), then
+\[
+\frac{    N_{j}(n)}{n} \to  \frac{1}{\mu _{j  j}} \ \text{ a.s.}
+\] 
+\end{thrm}
+
+\begin{cor}{}{}
+    For an irreducible Markov chain \( (X_{n} )_{n\geq 0} \),  we have
+    \[
+        \lim_{n \to \infty} \frac{1}{n}\sum_{k = 1}^n P_{ij}^k = \frac{1}{\mu _{j j }} . 
+    \]
+\end{cor}
+
+
+\subsubsection{Stationary distributions and the issue of convergence}
+
+\begin{defn}{Sationary Distribution}{}
+
+    A probability distribution \( (\pi _{j} )_{j \in \mathcal{S}}  \) is a stationary distribution for a Markov chain with transition probability matrix \( P \) if \( \pi _{j}  = \sum_{i} \pi _{i} p _{ij}\) for each \( j \in \mathcal{S}  \). Equivalently in matrix notation, \( \pi  = \pi P\), when \( \pi    \) is considered as a row vector. 
+
+\end{defn}
+
+\begin{defn}{Positive and Null recurrence}{}
+
+    A recurrent state \( j \) is positive recurrent if \( \mu _{jj} < \infty  \), or null recurrent if \( \mu _{jj} = \infty  \). Positive and null recurrence are class properties.
+
+\end{defn}
+
+It is important to note stationary distributions aren't necessarily unique. It is important to note that stationary distribution does not always exist. 
+
+\begin{thrm}{}{}
+An irreducible Markov chain satisfies exactly one of the following:
+\begin{enumerate}
+    \item All states are transient, or all states are null recurrent. In this case, \( \frac{1}{n}\sum_{k = 1}  ^n P_{ij}^k \to 0 \) as \( n \to \infty  \) for all states \( i,j \), and no stationary distribution exists. 
+    \item All states are positive recurrent. In this case, a unique stationary distribution exists and is given by \( \pi _{j} = \frac{1}{\mu _{ j j }} = \lim_{n \to \infty} \frac{1}{n}\sum_{k}^n P^k_{ij}  \). 
+\end{enumerate}
+
+
+\end{thrm}
+
+\begin{thrm}{}{}
+    Let \( (X_{n} )_{n\geq 0} \) be an irreducible, aperiodic, and positive recurrent Markov chain with stationary distribution \( \pi \). Then
+    \[
+        \lim_{n \to \infty} \sum_{j} \left\lvert P_{ij}^n - \pi _{j}   \right\rvert = 0 \text{ for all  } i  \in \mathcal{S} . 
+    \] In particular, \( P^n_{ij}  = \pi _{j}\) for all \( i, j \). 
+    \end{thrm}
+
+\subsection{Reversibility and Spectral Gap}
