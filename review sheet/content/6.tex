@@ -80,7 +80,7 @@ Let \( (X_{n} ) _{n\geq 0} \) be a Markov chain with transition matrix \( P \). 
 \end{idea}
 
 \begin{lem}{}{}
-State \( i \) is recurrent if and only if \( \sum_{n = 1}^{\infty} P_{ii} ^n < \infty . \) 
+State \( i \) is recurrent if and only if \( \sum_{n = 1}^{\infty} P_{ii} ^n = \infty . \) 
 \end{lem}
 
 \subsection{Markov Limit Theorems}
@@ -111,7 +111,7 @@ Let \( (X_{n} )_{n\geq 0} \) be a Markov chain starting in state \( X_0 = i. \) 
 
 \subsubsection{Stationary distributions and the issue of convergence}
 
-\begin{defn}{Sationary Distribution}{}
+\begin{defn}{Stationary Distribution}{}
 
     A probability distribution \( (\pi _{j} )_{j \in \mathcal{S}}  \) is a stationary distribution for a Markov chain with transition probability matrix \( P \) if \( \pi _{j}  = \sum_{i} \pi _{i} p _{ij}\) for each \( j \in \mathcal{S}  \). Equivalently in matrix notation, \( \pi  = \pi P\), when \( \pi    \) is considered as a row vector. 
 
@@ -124,6 +124,8 @@ Let \( (X_{n} )_{n\geq 0} \) be a Markov chain starting in state \( X_0 = i. \) 
 \end{defn}
 
 It is important to note stationary distributions aren't necessarily unique. It is important to note that stationary distribution does not always exist. 
+
+
 
 \begin{thrm}{}{}
 An irreducible Markov chain satisfies exactly one of the following:
@@ -143,3 +145,59 @@ An irreducible Markov chain satisfies exactly one of the following:
     \end{thrm}
 
 \subsection{Reversibility and Spectral Gap}
+
+\begin{defn}{Reversible Markov chain}{}
+A Markov chain with transition matrix \( P \) and stationary distribution \( \pi     \) is reversible if the transition probabilities satisfy
+\[
+    \pi _{i} p_{ij} = \pi _{j} p_{ji}  \text{ for all states } i,j.
+\]
+In this case, we say \( (P, \pi ) \) is reversible for convenience.
+
+The equations above are called the detailed balance equations. These equations are also sufficient for reversibility. Hence, if there is a probability distribution \( \pi   \) such that the equations are satisfied, then the Markov chain is reversible with stationary distribution \( \pi  \). 
+\end{defn}
+
+\subsubsection{Spectral gap and trend to equilibrium}
+
+\begin{defn}{Total variation distance}{}
+For probability measures \( \mu , \nu  \) on a measurable space \( (\Omega . \mathcal{F} ) \), we define their total variation distance
+\[
+    \lVert \mu - \nu  \rVert _{\mathrm{TV} } \coloneqq \sup_{A\in \mathcal{F} } \left\lvert \mu (A) - \nu (A) \right\rvert. 
+\]
+
+Also note that when \( \Omega    \) is countable, we have
+\[
+    \lVert \mu - \nu  \rVert _{\mathrm{TV} } = \frac{1}{2}\sum_{\omega }\left\lvert \mu (\omega ) - \nu (\omega)  \right\rvert  .
+\]
+\end{defn}
+
+\begin{defn}{Spectral gap}{}
+Define \( \mathrm{Var}_{\pi }(f) = Var(f(X))  \) for \( X \sim \pi  \) and \( f:\mathcal{S} \to \mathbb{R}  \). Also define the function \( Pf: \mathcal{S} \to \mathbb{R}  \) via the matrix-vector multiplication
+\[
+    (Pf)(i) = \sum_{j} p_{ij}f(j) , \ \ i \in \mathcal{S} .
+\]
+
+For a reversible Markov Chain \( (P, \pi ), \) define the spectral gap \( \gamma  \coloneqq 1 -\lambda _2 \), where \( \lambda _2 \) is the smallest number satisfying 
+\[
+    \mathrm{Var} _\pi   (P f) \leq \lambda _2 \mathrm{Var}_\pi  (f) \  \text{ for all } f:\mathcal{S}  \to \mathbb{R} \text{ with } \mathrm{Var}_\pi  (f)< \infty .  
+\]
+\end{defn}
+
+\begin{thrm}{}{}
+If \( (P, \pi ) \) is a reversible Markov chain with spectral gap \( \gamma  \), then 
+
+\[
+    \lVert P^n_{i\bullet} - \pi  \rVert ^2_{\mathrm{TV} } \leq \frac{(1 -\gamma )^n}{\pi _{i} } \text{ for each } n\geq 0 \text{ and each state } i.   
+\]
+Moreover, if the Markov chain is irreducible, aperiodic and has a finite state space, then \( \gamma >0. \) 
+\end{thrm}
+
+\begin{defn}{}{}
+Let \( \mu ,\pi  \) be probability distributions on state space \( \mathcal{S}  \). We say that \( \mu   \) has density \( h \) with respect to \( \pi  \) (written \( d \mu = h d \pi  \)) if 
+\[
+    \mu _{j} = h(j)\pi _{j} \ \ \forall j.
+\]
+\end{defn}
+
+\begin{lem}{}{}
+Let \( (P, \pi ) \) be a reversible Markov chain. If \( d \mu  = h d \pi  \), then \( P^n h  \) is the density of \(\mu P^n  \) with respect to \( \pi . \) 
+\end{lem}

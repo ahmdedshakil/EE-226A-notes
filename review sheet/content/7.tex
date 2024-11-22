@@ -1,0 +1,69 @@
+\section{Martingales}
+
+\subsection{Definitions and Examples}
+
+\begin{defn}{}{}
+Let \( (X_{n} )_{n\geq 0} \) be a stochastic process. A process \( (M_{n} )_{n\geq 0} \) is said to be a \textbf{martingale with respect to } \( (X_{n} )_{n\geq 0} \) if \( (M_{n} )_{n\geq 0} \) is adapted to \( (X_{n} )_{n\geq 0} \) and, for each \( n\geq 0 \), 
+\begin{enumerate}[label  = \emph{(\roman*)}]
+    \item \( \mathbb{E} \left\lvert M_{n}  \right\rvert< \infty   \);
+    \item \( \mathbb{E} [M_{n + 1} \mid  X_0,\dots , X_{n} ] = M_{n}  \). 
+\end{enumerate}
+If the equality in \emph{(ii)} is replaced by \( \geq \text{ or } \leq  \), then the process is said to be a \textbf{submartingale} or \textbf{supermartingale}, respectively. The phrase “adapted to” means that \( M_{n}  \) is a measurable function \( (X_0, \dots , X_{n} ) \) for each \( n\geq 0. \)
+\end{defn}
+
+\begin{idea}{}{}
+If \( (M_{n} )_{n\geq 0} \) is a martingale with respect to \( (X_{n} )_{n\geq 0} \), then for all \( m>n \), 
+\[
+    \mathbb{E} [M_{m} \mid X_0, \dots , X_{n} ]   = M_{n} . 
+\]
+If \( (M_{n} )_{n \geq 0} \) is a submartingale or supermartingale, then the equality above is \( \geq  or \leq  \), respectively. 
+\end{idea}
+
+
+\subsection{Stopping Times}
+
+\begin{defn}{}{}
+    A nonnegative integer-valued random variable \(T\) is a \textbf{stopping time} with respect to \( (X_{n} )_{n\geq 0} \) if, for each \(n\geq 0\), the occurrence of the event \(\left\{ T\leq n \right\} \) is determined entirely by \(( X _0, \dots , X_{n}  ) \). In other words, the indicator \(1_{\left\{ T\leq n \right\} }\) is a measurable function of \((X_0, \dots  , X_{n} )\). 
+\end{defn}
+
+\begin{defn}{Stopped process}{}
+Let \( (X_{n} )_{n\geq 0} \) be a process, and \(T\) be a stopping time. If \( (Y_{n} )_{n\geq 0} \) is adapted to \( (X_{n} )_{n\geq 0} \), then the process \( (Y_{T \wedge  n} )_{n\geq 0} \) is called the \textbf{stopped process}. Note that the stopped process satisfies \(Y_{T \wedge n} = Y_{n} \) for \(n\leq T\), and \(Y_{T \wedge n} = Y_{T} \)  for \(n>T\). 
+\end{defn}
+
+\subsubsection{Stopping times and martingales}
+
+\begin{idea}{}{}
+If \((M_{n} )_{n\geq 0}\) is a martingale and \(T\) is a stopping time, both with respect to \((X_{n} )_{n\geq 0}\), then the stopped process \((M_{T \wedge n} )_{n\geq 0}\) is also a martingale with respect to \((X_{n} )_{n\geq 0}\).
+\end{idea}
+
+\begin{idea}{}{}
+If \((M_{n} )_{n\geq 0}\) is a submartingale and \(T\) is a stopping time, both with respect to \((X_{n} )_{n\geq 0}\), then 
+\begin{align*}
+    \mathbb{E} [M_0] \leq \mathbb{E} [M_{T \wedge n}] \leq \mathbb{E} [M_{n} ]\ \ n \geq 0. 
+\end{align*}
+
+\end{idea}
+
+\begin{idea}{Optimal Stopping Theorem}{}
+Let \((M_{n} )_{n\geq 0}\) be a submartingale and \(T\) be a stopping time, both with respect to \((X_{n} )_{n\geq 0}\). If there is a constant \(k < \infty \) such that any one of the following hold
+\begin{enumerate}[label = \emph{\roman*.)}]
+    \item \(T \leq k\) a.s.; or
+    \item \(\left\lvert M_{n}   \right\rvert \leq k \) a.s. for each \(n\), and \(\mathrm{Pr} \left\{ T < \infty  \right\}= 1  \); or
+    \item \(\mathbb{E} [T] < \infty \) and \(\left\lvert M_{n} - M_{n - 1}  \right\rvert  \leq k\) a.s. for each \( n \geq 1\), 
+\end{enumerate}
+then
+\[
+    \mathbb{E} [M_0] \leq \mathbb{E} [M_{T} ]. 
+\]
+The inequality above is an equality when \((M_{n})_{n\geq 0}\) is a martingale. 
+\end{idea}
+
+\begin{thrm}{Wald's Identity}{}
+Let \((Y_{n} )_{n\geq 1}\) be adapted to \((X_{n} )_{n \geq 1}\). Assume \(Y_{n + 1} \) is independent of \((X_1, \dots ,X_{n} )\) for each \(n\geq 1\), \(\sup _{n \geq 1} \mathbb{E} \left\lvert Y_{n}  \right\rvert  < \infty \), and \(\mathbb{E} [Y_{n} ] = \mu \) for all \(n \geq 1\). If \(T \geq 1\) is a stopping time with respect to \((X_{n} )_{n \geq 1}\) satisfying \(\mathbb{E} [T] < \infty \), then 
+\begin{align*}
+    \mathbb{E} \left[ \sum_{n = 1}^{T} Y_{n}  \right] = \mu \mathbb{E} [T].
+\end{align*}
+
+\end{thrm}
+
+% pg 136

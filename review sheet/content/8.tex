@@ -1,0 +1,91 @@
+\section{Poisson Processes}
+
+\subsection{The Exponential Distribution}
+
+\begin{defn}{Exponential distribution}{}
+The \textbf{exponential distribution with rate} \(\lambda >0\), denote \(\mathrm{Exp} (\lambda )\), has density
+\[
+    f(t) = \begin{cases}
+        \lambda e^{-\lambda t} & t \geq 0 \\
+        0 & t < 0. 
+    \end{cases}
+\] 
+For \(T\sim \mathrm{Exp}(\lambda ) \), the distribution function is given by
+\[
+   \mathrm{Pr} \left\{ T \leq t \right\}  = \begin{cases}
+        1 - e^{-\lambda t}  & t \geq 0 \\
+        0 & t < 0. 
+    \end{cases}
+\] We note that \(\mathbb{E}[T] =  1/\lambda  \) and \(\mathrm{Var} (T) = 1/\lambda ^{2} \). An important property of exponential random variables is the \textbf{memoryless property}.  In particular, if \(T \sim \mathrm{Exp} (\lambda )\), then 
+\[
+    \mathrm{Pr} \left\{ T > t + s | T > t \right\} = \frac{\mathrm{Pr} \left\{ T > t + s \right\} }{\mathrm{Pr} \left\{ T > t \right\} } = \frac{e^{-\lambda (t + s)} }{e^{-\lambda t }} = e^{-\lambda s} = \mathrm{Pr} \left\{ T > s \right\}. 
+\]
+\end{defn}
+
+\begin{defn}{Erlang distribution}{}
+
+    If, \(T_1, \dots , T_{k} \) are i.i.d. exponential random variables with rate \(\lambda \), then their sum \(T = T_1 + \dots + T_{k} \) has an \textbf{Erlang} distribution, with density
+\[
+    f_{T} (t) = \begin{cases}
+        \lambda e^{- \lambda t}\frac{(\lambda t)^{k- 1} }{(k - 1)!}  & t \geq 0\\
+        0 &t < 0.
+    \end{cases}
+\]
+
+\end{defn}
+
+\subsection{Poisson Processes}
+
+\begin{defn}{Poisson Process}{}
+Let \(\tau _1, \tau _2, \dots \) be i.i.d. exponential random variables with rate \(\lambda > 0\) and, for \(n\geq 1\), define \(T_{n}  = \tau _1 + \tau _2 + \dots + \tau _{n} \), with the convention that \(T_0 = 0\). For each \(t\geq 0\), define the random variable \(N_{t} = \sup \left\{ n \geq 0: T_{n} \leq t \right\} \). The process \((N_{t} )_{t\geq 0}\) is called a \textbf{Poisson process} with rate \(\lambda  \). 
+
+This is best thought of as an example of a counting process. A \textbf{counting process} is a random process \((N_{t} )_{t\geq 0}\), such that (i) \(N_{t} \) is a non-negative integer for each time \(t \geq 0\); (ii) the sample paths \(t \mapsto N_{t} (\omega )\) are non-decreasing in \(t\); and (iii) the sample paths \(t \mapsto N_{t} (\omega )\) are right-continuous. 
+\end{defn}
+
+\begin{defn}{Poisson distribution}{}
+A random variable \(X\) is said to be Poisson distributed with mean \(\lambda \geq 0\)  (\(X \sim \text{Poisson}(\lambda ) \)) if \(X\) has probability mass function
+\[
+    \mathrm{Pr} \left\{ X = k \right\}  = e^{-\lambda }\frac{\lambda ^k}{k!} , \ k = 0,1,2, \dots 
+\]
+\end{defn}
+
+\begin{idea}{}{}
+If \((N_{t} )_{t \geq 0}\) is a Poisson process with rate \(\lambda \geq 0\), then for each \(t \geq 0\), we have \(N_{t} \sim \text{Poisson}(\lambda t)\). 
+\end{idea}
+
+\begin{thrm}{}{}
+Let \((N_{t} )_{t \geq 0}\) be a Poisson process with rate \(\lambda \). For any finite collection of distinct time instants \(0 = t_0 < t_1 <\dots < t_{k} \), the increments \((N_{t_1} - N_{t_0}), \dots , (N_{t_{k} } - N_{t_{k - 1} })\) are independent with \((N_{t_{i} } - N_{t_{i - 1} }  ) \sim \text{Poisson}(\lambda (t_{i} - t_{i - 1} ))\) for each \(1\leq i\leq k\). 
+\end{thrm}
+
+\begin{thrm}{Characterization of Poisson Processes}{}
+If \((N_{t} )_{t \geq 0}\) is a Poisson process, then the following hold:
+\begin{enumerate}
+    \item \(N_0 = 0\);
+    \item \(N_{t} \thicksim \text{Poisson} (\lambda t) \ \forall t \geq 0 \); 
+    \item \((N_{t} )_{t \geq 0}\) has independent increments. 
+\end{enumerate}
+Conversely, if these properties hold for a counting process \((N_{t} )_{t \geq 0}\), then it is a Poisson process.
+\end{thrm}
+
+\subsection{Conditioning on Arrivals}
+
+\begin{defn}{}{}
+Let \(X_{1}, X_{2}, \dots , X_{k}   \) be a collection of random variables. The \textbf{order statistics} \(X_{(1)}, \dots , X_{(k)}\) are the random variables defined by sorting the realizations of \(X_{1}, X_{2}, \dots , X_{k}   \) into increasing order. 
+
+\end{defn}
+
+\begin{thrm}{}{}
+Let \((N_{t} )_{t \geq 0}\) be a Poisson process with arrivals \((T_{i} )_{i \geq 1}\). Conditioned on the event \(\left\{ N_{t} = n \right\} \), the vector of arrival times \((T_1, \dots , T_{n} )\) has the same distribution as that of order statistics \((U_{(1)}, \dots , U_{(n)})\), where \(U_{i} \thicksim \mathrm{Unif}(0,t), \ 1 \leq i \leq n \) are independent. 
+\end{thrm}
+
+\begin{thrm}{}{}
+Let \((N_{t} )_{t\geq 0}\) be a Poisson process with rate \(\lambda \) and corresponding arrivals \((T_{n} )_{n\geq 1}\). For a Borel set \(B \subset [0, \infty )\), let \(|B|\) denotes its Lebesgue volume, and let \(N(B)\) denote the number of arrivals in \(B\); i.e., 
+\[
+    N(B) = \# \left\{ n\geq 1: T_{n}  \in B \right\}. 
+\]
+If \(B_{1}, B_2,\dots  \subset [0, \infty )\) are disjoint, bounded Borel sets, then \(N(B_1),N(B_2), \dots \) are independent, with \(N(B_{i} ) \thicksim \mathrm{Poisson}(\lambda |B_{i} |) . \) 
+\end{thrm}
+
+\begin{thrm}{Slivnyak's Theorem}{}
+Let \((N_{t} )_{t \geq 0 }\) be a Poisson process with rate \(\lambda \) and let \(x \in  (0, \infty )\). Conditioned on one arrival at time \(x\), the other arrivals form an (unconditional) rate-\(\lambda \) Poisson process. 
+\end{thrm}

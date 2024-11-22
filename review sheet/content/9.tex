@@ -1,0 +1,75 @@
+\section{Continuous-Time Markov Chains}
+
+\subsection{Definitions and Constructions}
+
+\begin{defn}{}{}
+A process \((X_{t} )_{t\geq 0}\) taking values in \(\mathcal{S} \) is a temporally homogeneous \textbf{continuous-time Markov chain} if:
+\begin{enumerate}[label = \emph{(\roman*)}]
+    \item given any initial state \(X_0 = i \in \mathcal{S} \), the sample paths \(t \mapsto X_{t} \) are a.s. right-continuous (with respect to the discrete topology on \(\mathcal{S} \)); and 
+    \item for any choice of discrete time instants \(0\leq t_1 < \dots < t_{k} <t \leq s\) and states \(i_1, i_2, \dots , i_k, i , j \in \mathcal{S} \), we have the Markov property
+    \[
+        \mathrm{Pr} \left\{ X_{s} = j \mid X_{t} = i, X_{t_{k} }= i_{k}, \dots , X_{t_1} = i_1  \right\}  = \mathrm{Pr} \left\{ X_{s - t} = j \mid X_0 = i  \right\}.
+    \]
+\end{enumerate}
+
+
+\end{defn}
+
+\begin{thrm}{}{}
+    Let \((X_{t} )_{t\geq 0}\) be a continuous-time Markov chain. The transition probabilities satisfy 
+    \begin{align*}
+        P^{s +t} = P^s P^t \text{ for all } s,t\geq 0,
+    \end{align*}
+    and \(\lim_{t \downarrow 0} P^t = I \). In other words, the transition probabilities \((P^t)_{t\geq 0}\)  form a \textbf{Markov semigroup}. 
+    \end{thrm}
+
+    \begin{thrm}{}{}
+    Let \((X_{t} )_{t \geq 0}\) be a continuous-time Markov chain with initial non-absorbing state \(X_0 = i\). The holding time \(T = \inf \left\{ t\geq 0: X_{t} \neq i \right\} \) has distribution \(T \thicksim \mathrm{Exp}(\lambda _{i} )  \) for \(\lambda _{i} \geq 0\) satisfying
+    \begin{align*}
+        P_{i i }^{h} = 1 - h \lambda _{i} + o(h). 
+    \end{align*}
+    Moreover, the next state \(X_{T} \) is independent of \(T\) and has distribution \begin{align*}
+        p_{ij} \coloneqq \mathrm{Pr} \left\{ X_{T} = j \mid X_0 = i \right\}  = \lim_{h \downarrow 0} \frac{P_{ij}^h }{1 - P_{i i}^h }, \ \ j \neq i. 
+    \end{align*}
+    
+    \end{thrm}
+
+\begin{thrm}{}{}
+Let \((X_t)_{t \geq 0}\) be a continuous-time Markov chain with transition probabilities \((P^t)_{t \geq 0}\), starting in non-absorbing state \(X_0 = i\), and let \(T = \inf \left\{ t \geq 0 : X_{t} \neq i \right\} \) denote the time of the first transition. Conditioned on \(T\) and \(X_{T}  = j\), the process \((X_{T + t})_{t \geq 0}\) is a continuous-time Markov chain with transition probabilities \((P^t)_{t\geq 0}\) and starting state \(j\). 
+\end{thrm}
+
+\begin{defn}{}{}
+The transition probabilities \((p_{ij} )_{i,j \in  \mathcal{S} }\) (with \(p_{i i } = 0\)) define a discrete-time Markov chain, known as the \textbf{embedded chain}. The parameters \((\lambda _{i} )_{i \in  \mathcal{S} }\) are called the \textbf{transition rates} for the Markov chain, \(\lambda _{i} \) is precisely the rate at which the process transitions out of state \(i\). 
+\end{defn}
+
+\begin{lem}{}{}
+Let \((p_{ij} )_{i,j \in  \mathcal{S} }\) be transition probabilities for a discrete-time Markov chain \((X_{n} )_{n \geq 0}\) starting in non-absorbing state \(X_0 = i\). 
+\begin{enumerate}[label = \emph{(\roman*)}]
+    \item The random variable \(N \coloneqq \inf \left\{ n\geq 0: X_{n} \neq i \right\} \) is geometric with distribution 
+    \[
+        \mathrm{Pr} \left\{ N = k \mid X_0 = i \right\} = p_{i i}^{k- 1} (1 - p_{i i }), \ \ k \geq 1
+    \]
+    \item The random variable \(X_{N} \) is independent of \(N\), and has distribution
+    \begin{align*}
+        \mathrm{Pr} \left\{ X_{N} = j \mid X_0 = i \right\}  = \frac{p_{i i }}{(1 - p_{i i})}, \ \ j\neq i.
+    \end{align*}
+    
+\end{enumerate}
+\end{lem}
+
+\subsection{The Infinitesimal Generator}
+
+\begin{defn}{}{}
+The \textbf{infinitesimal generator } for a continuous-time Markov chain \((X_{t} )_{t \geq 0}\) with transition rates \((\lambda _{i} )_{i \in  \mathcal{S} } \) is a matrix \(Q\) with entries 
+\begin{align*}
+    q_{ij}\coloneqq [Q]_{ij} = \begin{cases}
+        \lambda _{i} p_{ij} \ \ &\text{for  } j\neq i\\
+        -\lambda  _{i}  \ \ &\text{for } j = i, 
+    \end{cases}
+\end{align*}
+where \((p_{ij} )_{i,j \in \mathcal{S} }\) are the transition probabilities for the embedded chain. In particular, \(\lambda _{i} = \sum_{j\neq i}q_{ij}  \). 
+
+The numbers \((q_{ij} )_{i,j \in \mathcal{S} }\) are called the \textbf{jump rates } for the Markov chain. Essentially, \(q_{ij} \) describes the rate at which the Markov chain with infinitesimal generator \(Q\) transitions from state \(i\) to state \(j \ (j\neq i)\). 
+\end{defn}
+
+% stopped at 9.2.1
