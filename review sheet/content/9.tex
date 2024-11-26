@@ -23,7 +23,7 @@ A process \((X_{t} )_{t\geq 0}\) taking values in \(\mathcal{S} \) is a temporal
     and \(\lim_{t \downarrow 0} P^t = I \). In other words, the transition probabilities \((P^t)_{t\geq 0}\)  form a \textbf{Markov semigroup}. 
     \end{thrm}
 
-    \begin{thrm}{}{}
+    \begin{thrm}{}{4.3}
     Let \((X_{t} )_{t \geq 0}\) be a continuous-time Markov chain with initial non-absorbing state \(X_0 = i\). The holding time \(T = \inf \left\{ t\geq 0: X_{t} \neq i \right\} \) has distribution \(T \thicksim \mathrm{Exp}(\lambda _{i} )  \) for \(\lambda _{i} \geq 0\) satisfying
     \begin{align*}
         P_{i i }^{h} = 1 - h \lambda _{i} + o(h). 
@@ -73,3 +73,57 @@ The numbers \((q_{ij} )_{i,j \in \mathcal{S} }\) are called the \textbf{jump rat
 \end{defn}
 
 % stopped at 9.2.1
+
+\subsubsection{The Kolmogorov differential equations}
+
+\begin{cor}{}{}
+    Theorem \ref{th:4.3} implies the following.
+
+    For a continuous-time Markov chain with infinitesimal generator \(Q\), the transition probabilities satisfy
+    \[
+        P_{i i }^h = 1 - h \lambda _{i} + o(h)
+    \]
+    and 
+    \[
+        P_{ij}^h = hq_{ij}+ o(h), \ \ j \neq i.   
+    \]
+
+
+\end{cor}
+
+
+\begin{thrm}{Kolmogorov Differential Equations}{}
+Let \((P^t)_{t \geq 0}\) be the transition semigroup for a minimal continuous-time Markov chain with infinitesimal generator \(Q\). The map \(t \mapsto P^t\)  is continuously differentiable on \([0, \infty )\), and is the (unique) minimal non-negative solution to the differential equations
+\begin{align*}
+    \frac{d}{dt} P^t &=  QP^t; \ P^0 = I \tag{\text{Kolmogorov Backward Equation}} \\ 
+    \text{ and } \\
+    \frac{d}{dt} P^t &= P^{t}Q; \ P^0 = I\tag{\text{Kolmogorov Forward Equation}} .
+\end{align*}
+
+\end{thrm}
+
+\begin{rmk}{}{}
+A Markov semigroup \((P^t)_{t \geq 0}\) with generator \(Q\) always satisfies Kolmogorov's backwards equation. In contrast, the forward equation is not satisfied in general, but is satisfied by \((P_t)_{t \geq 0}\) corresponding to the minimal construction of a Markov chain with generator \(Q\). 
+
+In the case of finite state space, or more generally bounded transition
+rates, the Kolmogorov differential equations have a unique solution.
+\end{rmk}
+
+\begin{cor}{}{}
+Let \((P^t)_{t \geq 0}\) be the transition semigroup for a continuous-time Markov chain with infinitesimal general \(Q\). If \(\sup _{i \in  \mathcal{S} }\lambda _{i} < \infty  \), then \(P^t = e^{tQ}\coloneqq \sum_{k \geq 0}t^k \frac{Q^k}{k!}   \) for all \(t \geq 0 \). 
+\end{cor}
+
+\subsubsection{Criteria for non-explosiveness}
+
+\begin{defn}{Explosiveness}{}
+Define the time of explosion
+\begin{align*}
+    T_{ \infty }& \coloneqq \sup _{n \geq 1}T_{n}, \\
+    T_{n} & = \sum_{j = 1}^n \tau _{j} ,
+\end{align*}
+where \(T_{n}   \) denotes the time of the \(n\)th transition. The time of explosion is essentially the time at which an infinite number of transitions have taken place. When a process makes an infinite number of transitions in a finite time, it is known as an \textbf{explosion}. We say that a Markov chain is \textbf{non-explosive} if \(T_ \infty  = + \infty \) a.s.; otherwise, the chain is said to be \textbf{explosive}. Necessary and sufficient conditions for a Markov chain to be non-explosive can be stated in terms of its infinitesimal generator.
+\end{defn}
+
+\begin{thrm}{Reuter's Condition}{}
+A Markov chain with infinitesimal generator \(Q\) is non-explosive if and only if the only non-negative bounded solution \(v = (v_{i} )_{i \in  \mathcal{S} }\) to \(v = Qv\) is \(v = 0\). 
+\end{thrm}
