@@ -127,3 +127,28 @@ where \(T_{n}   \) denotes the time of the \(n\)th transition. The time of explo
 \begin{thrm}{Reuter's Condition}{}
 A Markov chain with infinitesimal generator \(Q\) is non-explosive if and only if the only non-negative bounded solution \(v = (v_{i} )_{i \in  \mathcal{S} }\) to \(v = Qv\) is \(v = 0\). 
 \end{thrm}
+
+\subsection{Continuous-time Markov Limit Theorems}
+
+\begin{defn}{}{}
+A continuous-time Markov chain is \textbf{irreducible} if the embedded chain is irreducible and has at least two states.
+\end{defn}
+
+\begin{defn}{Stationary distribution}{}
+A \textbf{stationary distribution} for a continuous-time Markov chain with transition probabilities \((P^t)_{t \geq 0}\) is a probability (row) vector \(p\) satisfying \(p  = pP^t\) for all \(t \geq 0\). 
+\end{defn}
+
+\begin{thrm}{}{}
+Consider a continuous-time Markov chain with infinitesimal generator \(Q\). A probability vector \(p\) satisfying \(\sum_{i} p _{i} \lambda _{i} < \infty \) is  a stationary distribution if and only if \(pQ = 0\). Moreover, if the chain is irreducible then \(p\) is the unique stationary distribution. 
+\end{thrm}
+
+\subsubsection{Stationary distributions and embedded chains}
+
+\begin{cor}{}{}
+Consider and irreducible continuous-time Markov chain with generator \(Q\). The following are equivalent. 
+\begin{enumerate}
+    \item The continuous-time chain has stationary distribution \(p\) satisfying \(\sum_{i} p _{i} \lambda _{i} < \infty \). 
+    \item The embedded chain has stationary distribution \(\pi  \) satisfying \(\sum_{i} \pi _{i} / \lambda _{i} < \infty \). 
+\end{enumerate}
+Moreover, if either (and therefore both) are true, then the stationary distributions are unique, and \(\pi _{k} = C ^{-1} p_{k} \lambda _{k} \) for all \(k\), where \(C = \sum_{i} p _{i} \lambda _{i} \). 
+\end{cor}

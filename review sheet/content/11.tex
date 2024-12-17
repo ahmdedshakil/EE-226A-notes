@@ -1,0 +1,181 @@
+\section{Hypothesis Testing}
+
+\subsection{Binary Hypothesis Testing}
+
+\begin{defn}{The setup}{}
+On the basis of observing a sample \(\omega \in \Omega \), we would like to decide whether \((\Omega , \mathcal{F} ,P_0)\)  or \((\Omega , \mathcal{F} ,P_1)\) is the better model. The former is called the \textbf{null hypothesis \(H_0\)}, and the latter is called the \textbf{alternate hypothesis }\(H_1\). 
+
+A \textbf{test} is a function \(\hat{H} : \Omega \to \left\{ H_0, H_1 \right\} \) that is measurable in the sense that \(\hat{H} ^{-1} (H_0) \in \mathcal{F} \). 
+Associated with any test \(\hat{H} \) are two fundamental error probabilities: the \textbf{Type I error rate} (or, false positive probability), and the \textbf{Type II error rate} (or, false negative probability). More precisely, 
+\begin{align*}
+    P_ 0 {\left\{ \hat{H} = H_1 \right\} } =:& \text{ Type I error rate (or, false positive probability)} \\
+    P_ 1 {\left\{ \hat{H} = H_0 \right\} } =:& \text{ Type II error rate (or, false negative probability).} \\
+\end{align*}
+The \textbf{power} of a test \(\hat{H} \) is the probability of avoiding a Type II error, and is therefore equal to \(P_1 \left\{\hat{H} = H _1 \right\} \). 
+
+\end{defn}
+
+\subsubsection{The likelihood ratio}
+
+We assume henceforth that \(P_1 \ll P_0\). 
+
+\begin{defn}{}{}
+The Radon-Nikodym theorem ensures there is a \(\mathcal{F} -\)measurable, \(P _0\)-a.s. unique function \(\Lambda :\Omega \to [0, \infty )\) satisfying the "\textbf{change of measure}" identity
+\[
+    \mathbb{E} _{P_1}\left[ 1_A \right] = \mathbb{E} _{P_0} \left[ \Lambda 1_A\right] , \ \ \text{ for all } A \in \mathcal{F}. 
+\]
+The function \(\Lambda \) is called a Radon-Nikodym derivative (usually denoted by \(\frac{dP_1}{dP_0} \)), but in the context of hypothesis testing it is generally referred to as the \textbf{likelihood ratio} because it can be thought of as the relative likelihood of observing a sample \(\omega \) under the different hypotheses \(H_{1} \) and \(H_0\). \(\Lambda \)  is simply the ratio of densities, or if \(\Omega \) is discrete, then \(\Lambda \) is the ratio of the probability mass functions. 
+
+\end{defn}
+
+% stopped at example 11.4, need to understand this one
+
+\subsubsection{Threshold tests and the error curve}
+
+\begin{defn}{}{}
+Assume \(P_1 \ll P_0\), and let \(\eta \geq 0 \). The threshold test with threshold \(\eta \), denote \(\hat{H} _\eta \), is defined according to 
+\begin{align*}
+    \hat{H} _\eta = \begin{cases}
+        H_1 \ \ & \text{if } \Lambda (\omega ) \geq \eta \\
+        H_0 \ \ & \text{if } \Lambda (\omega ) < \eta . 
+    \end{cases}
+\end{align*}
+
+\end{defn}
+
+\begin{exmp}{MAP and ML tests}{}
+The \textbf{maximum a posteriori test (MAP)} is a threshold test where we have a prior belief that \(H_0\) is true with probability \(\pi _0 < 1\) and \(H_1\) is true with probability \(\pi _1 =1 - \pi _0\). The MAP test is the threshold test with threshold \(\eta = \pi _0 / \pi _1\), and has the property that it minimizes the total error rate among all tests. Under prior \(\pi\), the total error probability for any test \(\hat{H} \)  satisfies
+\begin{align*}
+    \mathrm{Pr} \left\{ \hat{H} \text{ errors}  \right\} = \pi _0 P_{0 } \left\{ \hat{H}  = H_1\right\} + \pi _1 P _1 \left\{ \hat{H} = H_0 \right\} \geq \mathrm{Pr} \left\{ \hat{H}_{\mathrm{MAP} } \text{ errors}  \right\}. 
+\end{align*}
+
+The \textbf{maximum likelihood (ML) test} is defined to be the threshold test with \(\eta  = 1\). It minimizes the sum of Type I and Type II error rates, which follows from the previous example when \(\pi _0 = \pi  _1\). 
+\end{exmp}
+
+\begin{defn}{}{}
+The threshold tests \((\hat{H} _\eta )_{\eta \geq 0}\) define a function called the \textbf{error curve}, which plays a fundamental role in characterizing the best tradeoff between Type I and Type II error rates. 
+
+Assume \(P_1 \ll P _0\) and let \(\Lambda \) denote the likelihood ration. The error curve \(u:[0,1] \to \mathbb{R} \) is defined via
+\begin{align*}
+    u(\theta )\coloneqq \sup _{\eta \geq 0} \left\{ P_{1} \left\{ \hat{H} _\eta = H_0 \right\} + \eta \left( P_0 \left\{ \hat{H} _\eta = H_1 \right\} - \theta   \right)    \right\}, \ \ 0 \leq \theta \leq 1. 
+\end{align*}
+Note that, as the pointwise supremum of affine functions, \(u\) is a convex function on \([0,1]\). 
+\end{defn}
+
+\subsubsection{The Neyman-Pearson lemma}
+
+We say that a test \(\hat{H} \) \textbf{lies above the error curve} if 
+\[
+    P_1 \left\{ \hat{H} = H _0 \right\} \geq u(P_0 \left\{ \hat{H} = H_1 \right\} ),
+\]
+and we say that \(\hat{H} \) \textbf{lies on the error curve} if this is met with equality. 
+
+\begin{thrm}{Neyman-Pearson Lemma}{} 
+Assume \(P_1 \ll P_0\). All tests \(\hat{H} \) lie above the error curve. Moreover, every threshold test \(\hat{H} _\eta \) lies on the error curve. The Neyman–Pearson lemma ensures that threshold tests are optimal
+in the sense that they lie on the error curve, and any other test lies above. 
+\end{thrm}
+
+\begin{defn}{Randomized threshold test}{}
+    Fix parameters \(\eta _0, \eta _1\geq 0\) and \(p \in [0,1]\). The corresponding (randomized) threshold test \(\hat{H} \) is defined by taking \(R \thicksim \mathrm{Bernoulli}(p) \), and putting 
+    \[
+        \hat{H} (\omega ) = 1_{R = 0} \hat{H} _{\eta _0}(\omega ) + 1_{R = 1}\hat{H} _{\eta _1}(\omega ). 
+    \]
+    As a result, by varying the parameters \(\eta _ 0, \eta _1 \geq 0\) and \(p \in [0,1]\), any point on the error curve is achievable by a (possibly randomized) threshold test. For a fixed \(\theta \in [0,1]\), the \textbf{Neyman-Pearson rule} is defined to be the (possibly randomized) threshold test that achieves Type II error probability \(u(\theta )\) subject to the constant that Type I error probability does not exceed \(\theta \).  In other words, subject to a Type I error constraint, the Neyman–Pearson
+    rule is the most powerful test.
+\end{defn}
+
+\begin{defn}{Sufficient statistic}{}
+    A mapping \(T: \omega \mapsto T(\omega )\) is said to be a \textbf{sufficient statistic} if there exists a function \(\nu   \) such that  \(\Lambda (\omega ) = \nu \circ T(\omega )\) for all \(\omega \in \Omega \). 
+
+\end{defn}
+
+\subsection{Sequential Analysis}
+
+\begin{defn}{}{}
+Let \(P_0, P_1\) be probability distributions on, say, \R{}, and consider i.i.d. random variables \((X_{n} )_{n \geq 1}\), with common distribution \(Q\). Let the null hypothesis be \(H_0 :Q = P_0\), and the alternate hypothesis be \(H_1 :Q = P_1\). Let \((\hat{H} _{n} )_{n \geq 1} \) be a sequence of tests adapted to \((X_{n}  )_{n \geq 1} \), and \(T\) be a stopping time. This induces Type I and Type II error rates for the \textbf{sequential test} \(\hat{H} _{T} \) equal to 
+\begin{align*}
+    \alpha \coloneqq P_0 \left\{ \hat{H} _{T} = H_1 \right\}, \text{ and } \beta \coloneqq P_1 \left\{ \hat{H} _{T} = H_ 0 \right\},
+\end{align*}
+respectively, where we abuse notation and abbreviate
+\begin{align*}
+    P _{i} \left\{ \cdot  \right\} = \mathrm{Pr} \left\{ \cdot \mid H_{i} \text{ true}  \right\}, \ \ i = 0, 1. 
+\end{align*}
+
+
+
+\end{defn}
+
+\subsubsection{Average sample requirements}
+\begin{defn}{}{}
+    For probability measures \(u \ll v\) with corresponding likelihood ratio, the relative entropy between \(u\) and \(v\) is defined as 
+    \begin{align*}
+        D(u \mid \mid v)\coloneqq \mathbb{E} _{u} [\log \Lambda ] = \mathbb{E} _{v} [\Lambda \log \Lambda ].
+    \end{align*}
+The entropy is greater than or equal to 0 due to convexity, with equality if and only if \(u = v    \). For two reals \(p,q\in [0,1]\), we abuse notation slightly and write
+\begin{align*}
+    D(p \mid \mid q) \coloneqq p\log (\frac{p}{q})+(1 - p)\log (\frac{1 - p}{1 - q  }). 
+\end{align*}
+
+\end{defn}
+    
+
+\begin{thrm}{}{}
+Let the above notation prevail, and let \(\mathbb{E}_{i} [\cdot ] \) denote the expectaion under hypothesis \(H_{i} \) for \(i = 0,1\). If \(\alpha +\beta \leq 1\), it holds that
+\begin{align*}
+    \mathbb{E} _0[T] \geq \frac{D(\alpha \mid \mid 1 -\beta )}{D(P_0 \mid \mid P_1)}, \text{ and } \mathbb{E} _1[T]\geq \frac{D(1 -\beta \mid \mid \alpha )}{D(P_1 \mid \mid P_0)}. 
+\end{align*}
+
+Note that \(T\) is the number of samples. 
+
+\end{thrm}
+
+% 11.2.2
+
+\subsubsection{The sequential probability ratio test}
+
+\begin{defn}{}{}
+    Consider the setting where \(P_0 \neq P_1\), and assume \(P_1 \ll P _0\), with likelihood ratio \(\Lambda = \frac{dP_1}{dP_0} .\) Fix two thresholds \(\eta _0 < \eta _1\). For i.i.d. observations \((X_{n} )_{n \geq 1}\) as before, define the sequence of likelihoods
+    \begin{align*}
+        L_{n} = \prod_{i=1}^{n} \Lambda (X_{i} ), \ \  n \geq 1. 
+    \end{align*}
+    Define the stopping time \(T = \inf \left\{ n \geq 1:L_{n} \notin (\eta _0, \eta _1) \right\} \), and the corresponding \textbf{sequential probability ratio test}
+    \begin{align*}
+        \hat{H} _{T} = \begin{cases}
+            H_0&  \text{ if } L_{T} \leq \eta _0\\
+            H_1&  \text{ if } L_{T} \geq \eta _0.
+        \end{cases}
+    \end{align*}
+    This induces Type I and Type II error rates for the sequential test \(\hat{H} _{T} \) equal to 
+\begin{align*}
+    \alpha \coloneqq P_0 \left\{ \hat{H} _{T} = H_1 \right\}, \text{ and } \beta \coloneqq P_1 \left\{ \hat{H} _{T} = H_ 0 \right\}.
+\end{align*}
+\end{defn}
+
+\begin{idea}{}{}
+For thresholds \(0\leq \eta _0< \eta _1\), the Type I/II error rates for the corresponding sequential probability ratio test \(\hat{H} _{T} \) satisfy
+\begin{align*}
+    \frac{\alpha }{1 -\beta }\leq \frac{1}{\eta _1} \text{ and } \frac{\beta }{1 - \alpha } \leq \eta _0. 
+\end{align*}
+
+\end{idea}
+
+\begin{thrm}{}{}
+Fix thresholds \(\eta _0 < \eta _1\), and let \(\alpha , \beta \) denote the Type I/II error rates realized by the corresponding sequential probability ratio test \(\hat{H} _{T} \).  If \(D(P_1 \mid \mid P_0) < \infty \) and \(D(P_0 \mid \mid P_1) < \infty \), then 
+\begin{align*}
+    \mathbb{E}_0[T] \simeq \frac{D(\alpha \mid \mid 1 -\beta )}{D(P_0 \mid \mid P_1)} , \text{ and } \mathbb{E} _1[T] = \frac{D(1 -\beta \mid \mid \alpha )}{D(P_1 \mid P_0)} . 
+\end{align*}
+
+In this case, the approximations above are fairly accurate, demonstrating (approximate) optimality of the sequential probability ratio test. This assertion of optimality can be made more precise: among
+all tests with the same power, the sequential probability ratio test requires
+the fewest samples on average.
+
+\end{thrm}
+
+
+\begin{lem}{}{}
+Let \((Z_{n} )_{n\geq 1} \) be i.i.d. random variables. For given \(a < b\), define the stopping time 
+\[K = \inf \left\{ n \geq 1: \sum_{i = 1} ^n Z_{i} \notin (a,b) \right\} .\]
+If \(\mathrm{Pr}\left\{ \left\lvert Z_1 \right\rvert  > 0 \right\} > 0  \), then \(\mathbb{E} [K] < \infty \).  
+
+This lemma guarantees that any sequential probability ratio test will require finitely many samples on average.
+\end{lem}
